@@ -1,0 +1,73 @@
+name: 'Aider GitHub Resolver'
+description: 'AI-powered GitHub Action that integrates Aider with GitHub workflows for automated code changes'
+author: 'GitHub Copilot'
+
+branding:
+  icon: 'cpu'
+  color: 'blue'
+
+inputs:
+  github_token:
+    description: 'GitHub token for API access'
+    required: true
+  
+  # LLM API Keys (at least one required)
+  openai_api_key:
+    description: 'OpenAI API key for GPT models'
+    required: false
+  
+  anthropic_api_key:
+    description: 'Anthropic API key for Claude models'
+    required: false
+  
+  deepseek_api_key:
+    description: 'DeepSeek API key for cost-effective operations'
+    required: false
+  
+  # Configuration
+  default_model:
+    description: 'Default AI model to use (deepseek, claude-sonnet, gpt-4, etc.)'
+    required: false
+    default: 'deepseek'
+  
+  max_execution_time:
+    description: 'Maximum execution time in minutes'
+    required: false
+    default: '30'
+  
+  enable_auto_pr:
+    description: 'Automatically create pull requests for changes'
+    required: false
+    default: 'true'
+  
+  cost_budget_daily:
+    description: 'Daily cost budget in USD (0 = unlimited)'
+    required: false
+    default: '10'
+  
+  allowed_users:
+    description: 'Comma-separated list of GitHub usernames allowed to trigger the action'
+    required: false
+    default: ''
+  
+  config_file:
+    description: 'Path to agents configuration file'
+    required: false
+    default: '.github/agents.md'
+
+outputs:
+  result:
+    description: 'Result of the Aider operation'
+  
+  pull_request_url:
+    description: 'URL of created pull request (if any)'
+  
+  cost_used:
+    description: 'Cost of the operation in USD'
+  
+  files_changed:
+    description: 'Number of files modified'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
